@@ -1,0 +1,44 @@
+---
+import { useStoryblokApi } from '@storyblok/astro'
+import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
+const slug = Astro.params.slug;
+
+const storyblokApi = useStoryblokApi()
+let content;
+try {
+  const { data } = await storyblokApi.get(`cdn/stories/${slug === undefined ? "home" : slug}`, {
+    version: import.meta.env.DEV ? "draft" : "published",
+  });
+  content = data.story.content
+} catch (error) {
+  return Astro.redirect('/404')
+}
+
+export async function getStaticPaths() {
+  const sbApi = useStoryblokApi();
+
+  const { data } = await sbApi.get("cdn/stories", {
+    content_type: "page",
+    version: import.meta.env.DEV ? "draft" : "published",
+  });
+
+  const stories = Object.values(data.stories);
+
+  return stories
+  .filter((story) => story.slug !== 'home')
+  .map((story) => {
+    return {
+      params: { slug: story.slug },
+    };
+  });
+}
+---
+
+<html lang="en">
+  <head>
+    <title>Storyblok & Astro</title>
+  </head>
+  <body>
+    <StoryblokComponent blok={content} />
+  </body>
+</html>

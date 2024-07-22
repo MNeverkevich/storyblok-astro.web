@@ -1,0 +1,12 @@
+---
+import { storyblokEditable } from '@storyblok/astro'
+
+const { blok } = Astro.props
+---
+
+<div
+  {...storyblokEditable(blok)}
+  class='tw-w-full tw-p-12 tw-bg-[#f7f6fd] tw-rounded-[5px] tw-text-center'
+>
+  <h3 class='tw-text-2xl tw-text-[#1d243d] tw-font-bold'>{blok.name}</h3>
+</div>

@@ -15,7 +15,6 @@ export default defineConfig({
   integrations: [
     storyblok({
       accessToken: env.STORYBLOK_TOKEN,
-      // accessToken: 'xrGmi243HJkUKO7uOavbDwtt',
       apiOptions: {
         region: 'us',
       },

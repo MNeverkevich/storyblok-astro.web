@@ -10,8 +10,6 @@ try {
     version: import.meta.env.STORYBLOK_ENV == "development" ? "draft" : "published",
   });
   content = data.story.content
-  console.log("STORYBLOK_ENV");
-  console.log(import.meta.env.STORYBLOK_ENV);
 } catch (error) {
   return Astro.redirect('/404')
 }

@@ -7,7 +7,7 @@ const storyblokApi = useStoryblokApi()
 let content;
 try {
   const { data } = await storyblokApi.get(`cdn/stories/${slug === undefined ? "home" : slug}`, {
-    version: import.meta.env.DEV ? "draft" : "published",
+    version: import.meta.env.STORYBLOK_ENV == "development" ? "draft" : "published",
   });
   content = data.story.content
 } catch (error) {
@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 
   const { data } = await sbApi.get("cdn/stories", {
     content_type: "page",
-    version: import.meta.env.DEV ? "draft" : "published",
+    version: import.meta.env.STORYBLOK_ENV == "development" ? "draft" : "published",
   });
 
   const stories = Object.values(data.stories);
